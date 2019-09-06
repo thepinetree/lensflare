@@ -1,12 +1,12 @@
 import React from 'react';
-import { Paper } from '@material-ui/core';
-import { makeStyles, styled } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/styles';
+import { Switch, Route } from 'react-router-dom';
 
 import Header from './Header';
-import Video from './Video';
+import Body from './Body';
 
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
   root: {
     minHeight: '100%',
     height: '100%',
@@ -14,46 +14,26 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  body: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    padding: 25,
-    [theme.breakpoints.down('md')]: {
-      padding: 0,
-      zIndex: 1200,
-      flexDirection: 'column',
-    }
-  },
-  comments: {flex: 1},
-}));
-
-const MyPaper = styled(Paper)({
-  margin: 15,
-  padding: 20,
 });
 
+
+const Index = () => (
+  <div>This is a test page. What should I include on this page?</div>
+);
 
 const App = () => {
   const classes = useStyles();
 
-  // <TextField variant='filled' placeholder='Enter a YouTube Link ...' className={classes.field} />
-
   return (
     <div className={classes.root}>
       <Header />
-      <div className={classes.body}>
-        <Video videoID='L9hRsCaKC3s' />
-        <div className={classes.comments}>
-          <MyPaper>Testing A</MyPaper>            
-          <MyPaper>Testing B</MyPaper>
-          <MyPaper>Testing C</MyPaper>
-          <MyPaper>Testing D</MyPaper>
-        </div>
-      </div>
+      <Switch>
+        <Route path="/" exact component={Index} />
+        <Route path="/:videoID" component={Body} />
+      </Switch>
     </div>
   ); 
 };
+
 
 export default App;
