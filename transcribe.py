@@ -46,4 +46,4 @@ def wavToSpeech(file):
         print('Transcript: {}'.format(result.alternatives[0].transcript))
 
 
-wavToSpeech("./Scrub Daddy Pitch (Shark Tank Season 4 Episode 7)-ggi3yfUv0Mo.wav")
+wavToSpeech("./audio/Scrub Daddy Pitch (Shark Tank Season 4 Episode 7)-ggi3yfUv0Mo.wav")
