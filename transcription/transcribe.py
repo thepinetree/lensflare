@@ -62,4 +62,4 @@ def wavToSpeech(file):
         f.close
 
 
-wavToSpeech("audio/InventHelp’s National TV Ad Featuring George Foreman (30 sec)-L9hRsCaKC3s.wav")
+wavToSpeech("./audio/InventHelp’s National TV Ad Featuring George Foreman (30 sec)-L9hRsCaKC3s.wav")
