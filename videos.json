@@ -1,6 +1,16 @@
 {
-    "https://www.youtube.com/watch?v=L9hRsCaKC3s": ["honey", "twilio"],
-    "https://www.youtube.com/watch?v=ggi3yfUv0Mo": ["marquee", "kensho"],
-    "": ["resilience"],
-    "https://www.youtube.com/watch?v=dQw4w9WgXcQ": ["humor"]
+    "L9hRsCaKC3s": {
+        "0": "rekognition-george-foreman",
+        "7": "url-https://inventhelp.com/",
+        "24": "twilio-18005911339"
+    },
+    "ggi3yfUv0Mo": {
+        "4": "url-https://scrubdaddy.com/",
+        "10": "calculator-1000000000",
+        "20": "trends-scrub-daddy"
+    },
+    "dQw4w9WgXcQ": {
+        "4": "rekognition-rick-astley",
+        "8": "shazam-never-gonna-give-you-up"
+    }
 }
