@@ -13,7 +13,21 @@ def urlToWAV(url):
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl: 
         ydl.download([url])
-    print(ydl)
+
+def uploadFile(file):
+    # Imports the Google Cloud client library
+    from google.cloud import storage
+
+    # Instantiates a client
+    storage_client = storage.Client()
+
+    # The name for the new bucket
+    bucket_name = 'fileclient'
+
+    # Creates the new bucket
+    bucket = storage_client.create_bucket(bucket_name)
+
+    print('Bucket {} created.'.format(bucket.name))
 
 def wavToSpeech(file):    
     import io
