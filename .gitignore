@@ -12,11 +12,7 @@
 # Ignore all local history of files
 .history
 
-<<<<<<< HEAD
-# Ignore neuralnet
-=======
 # Ignore nerualnet
->>>>>>> 5fc9e13... write to transcribe.txt
 resnet.h5
 
 # End of https://www.gitignore.io/api/visualstudiocode
