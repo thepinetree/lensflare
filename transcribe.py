@@ -57,7 +57,9 @@ def wavToSpeech(file):
     response = client.recognize(config, audio)
 
     for result in response.results:
-        print('Transcript: {}'.format(result.alternatives[0].transcript))
+        f = open("transcription.txt", "w")
+        f.write('Transcript: {}'.format(result.alternatives[0].transcript))
+        f.close
 
 
-wavToSpeech("./audio/Scrub Daddy Pitch (Shark Tank Season 4 Episode 7)-ggi3yfUv0Mo.wav")
+wavToSpeech("audio/InventHelp’s National TV Ad Featuring George Foreman (30 sec)-L9hRsCaKC3s.wav")
