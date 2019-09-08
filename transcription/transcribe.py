@@ -9,6 +9,7 @@ from google.cloud.speech_v1 import enums
 from google.cloud import storage
 
 import youtube_dl
+import wave
 
 download_path = ""
 
@@ -42,28 +43,29 @@ def uploadWav():
 
 def wavToSpeech():    
     """Instantiates a client."""
-    print("reached here too")
     speech_client = speech_v1.SpeechClient()
     storage_client = storage.Client()
-
+    
+    waveobj = wave.open(download_path)
+    channelct = waveobj.getnchannels()
+    
     config = {
-        "audio_channel_count": 2,
+        "audio_channel_count": channelct,
         "language_code": 'en-US'
     }
-    print("gs://lensflare-storage/" + download_path)
     audio = {"uri": "gs://lensflare-storage/" + download_path}
 
     # Detects speech in the audio file
     operation = speech_client.long_running_recognize(config, audio)
     response = operation.result()
 
-    print("now here")
+    f = open("transcription.txt", "w")
+    f.write("")
+    f.close()
     for result in response.results:
-        print(result)
-        print(result.alternatives[0].transcript)
         f = open("transcription.txt", "a")
         f.write(result.alternatives[0].transcript)
-        f.close
+        f.close()
     print("completed write")
 
 def transcribe(video_id):
@@ -71,5 +73,4 @@ def transcribe(video_id):
     uploadWav()
     wavToSpeech()
 
-
-transcribe("L9hRsCaKC3s")
+transcribe("0bFEg1dn8oo")
