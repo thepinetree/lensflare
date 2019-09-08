@@ -2,18 +2,12 @@ from __future__ import unicode_literals
 import io
 import os
 
-<<<<<<< HEAD
-def urlToWAV(video_id):
-    import youtube_dl
-    url = 'https://www.youtube.com/watch?v=' + video_id
-=======
 # Imports the Google Cloud client library
 from google.cloud import speech_v1
 from google.cloud.speech_v1 import enums
 from google.cloud import storage
 
 import youtube_dl
->>>>>>> d46da5beb8766aebc5177e36811f0b05bcd93865
 
 def urlToWAV(url):
     ydl_opts = {
