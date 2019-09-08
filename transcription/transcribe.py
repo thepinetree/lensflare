@@ -12,10 +12,19 @@ import youtube_dl
 import wave
 
 download_path = ""
+video_id = ""
 
-def urlToWAV(video_id):
+def transcribe(input_id):
+    global video_id
+    video_id = input_id
+    urlToWAV()
+    uploadWav()
+    wavToSpeech()
+
+def urlToWAV():
     """Downloads a file to the bucket."""
     global download_path
+    global video_id
     url = "https://www.youtube.com/watch?v="+video_id
     outtmpl = "audio/" + video_id + '.%(ext)s'
     ydl_opts = {
@@ -43,6 +52,7 @@ def uploadWav():
 
 def wavToSpeech():    
     """Instantiates a client."""
+    global video_id
     speech_client = speech_v1.SpeechClient()
     storage_client = storage.Client()
     
@@ -59,16 +69,15 @@ def wavToSpeech():
     operation = speech_client.long_running_recognize(config, audio)
     response = operation.result()
 
-    f = open("transcription.txt", "w")
+    path = "transcriptions/" + video_id + ".txt"
+    f = open(path, "w")
     f.write("")
     f.close()
     for result in response.results:
-        f = open("transcription.txt", "a")
+        f = open(path, "a")
         f.write(result.alternatives[0].transcript)
         f.close()
-    print("completed write")
 
-def transcribe(video_id):
-    urlToWAV(video_id)
-    uploadWav()
-    wavToSpeech()
+transcribe("i0n66v4AhG0")
+transcribe("L9hRsCaKC3s")
+transcribe("ggi3yfUv0Mo")

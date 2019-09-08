@@ -12,7 +12,7 @@ def classifyImage(path):
     detector.setModelTypeAsRetinaNet()
     detector.setModelPath(os.path.join(execution_path, "resnet.h5"))
     detector.loadModel()
-    detector = detector.detectObjectsFromImage(input_image=os.path.join(execution_path, path), output_image_path=os.path.join(execution_path, "classifiedimg.jpg"))
+    detector = detector.detectObjectsFromImage(input_image=os.path.join(execution_path, path), output_image_path=os.path.join(execution_path, "images/classifiedimg.jpg"))
 
 def detectEdges(path):
     image = cv2.imread(path, 0)
@@ -25,3 +25,5 @@ def detectEdges(path):
 
     plt.imshow(edges)
     plt.show()
+
+classifyImage("images/flood.png")
