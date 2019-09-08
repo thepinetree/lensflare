@@ -50,11 +50,36 @@ const Body = ({ match }) => {
     }
   };
 
+  const collectedData = Object.keys(times).map(time => {
+    const [name, data] = times[time];
+
+    if (name === 'kensho') {
+      const fetcher = async () => {
+        const response = await fetch(`https://www.kensho.com/external/v1/search_entities?class_name=Equity&search_string=${data}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token 7c66ebc3338c0f5e8d8c02f08f86ec21840d7446",
+          },
+        });
+        const basic = await response.json();
+        return basic.data[0];
+      };
+      return {
+        type: 'stock',
+        ans: fetcher(),
+      };
+    }
+
+    return {};
+  });
+
   return (
     <div className={classes.body}>
       <Video videoID={videoID} times={times} onTimeEvent={handleTimeEvent} />
       <div className={classes.comments}>
-        {Object.keys(data).map(key => <MyPaper key={key}>Time at {key} and Desc is {data[key]}</MyPaper>)}
+        {collectedData.map(item => {
+          if (item.type === 'stock') return <MyPaper>{item.ans.name} ({item.ans.ticker})</MyPaper>;
+        })}
       </div>
     </div>
   );
