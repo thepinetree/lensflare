@@ -26,7 +26,7 @@ def urlToWAV(video_id):
             'preferredquality': '192',
         }],
     }
-
+    download_path = "audio/" + video_id + ".wav"
     print(download_path)
     with youtube_dl.YoutubeDL(ydl_opts) as ydl: 
         ydl.download([url])
@@ -57,10 +57,14 @@ def wavToSpeech():
     operation = speech_client.long_running_recognize(config, audio)
     response = operation.result()
 
+    print("now here")
     for result in response.results:
+        print(result)
+        print(result.alternatives[0].transcript)
         f = open("transcription.txt", "a")
-        f.write('Transcript: {}'.format(result.alternatives[0].transcript))
+        f.write(result.alternatives[0].transcript)
         f.close
+    print("completed write")
 
 def transcribe(video_id):
     urlToWAV(video_id)
@@ -68,4 +72,4 @@ def transcribe(video_id):
     wavToSpeech()
 
 
-transcribe("dQw4w9WgXcQ")
+transcribe("L9hRsCaKC3s")
