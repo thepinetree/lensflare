@@ -72,5 +72,3 @@ def transcribe(video_id):
     urlToWAV(video_id)
     uploadWav()
     wavToSpeech()
-
-transcribe("0bFEg1dn8oo")
