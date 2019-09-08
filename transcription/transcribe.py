@@ -1,8 +1,15 @@
 from __future__ import unicode_literals
+import io
+import os
+
+# Imports the Google Cloud client library
+from google.cloud import speech_v1
+from google.cloud.speech_v1 import enums
+from google.cloud import storage
+
+import youtube_dl
 
 def urlToWAV(url):
-    import youtube_dl
-
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
@@ -14,30 +21,42 @@ def urlToWAV(url):
     with youtube_dl.YoutubeDL(ydl_opts) as ydl: 
         ydl.download([url])
 
-def uploadFile(file):
-    # Imports the Google Cloud client library
-    from google.cloud import storage
-
-    # Instantiates a client
+def upload_blob(source_file_name):
+    """Uploads a file to the bucket."""
     storage_client = storage.Client()
+    bucket = storage_client.get_bucket("lensflare-storage")
+    blob = bucket.blob("audio.wav")
 
-    # The name for the new bucket
-    bucket_name = 'fileclient'
+    blob.upload_from_filename(source_file_name)
 
-    # Creates the new bucket
-    bucket = storage_client.create_bucket(bucket_name)
+    print('File {} uploaded to {}.'.format(
+        source_file_name,
+        "audio.wav"))
 
-    print('Bucket {} created.'.format(bucket.name))
+def wavToSpeech(url):    
+    # Instantiates a client
+    speech_client = speech_v1.SpeechClient()
+    storage_client = storage.Client()
+    
+    config = {
+        "audio_channel_count": 2,
+        "language_code": 'en-US'
+    }
+    audio = {"uri": "gs://lensflare-storage/audio.wav"}
+
+    # Detects speech in the audio file
+    operation = speech_client.long_running_recognize(config, audio)
+    response = operation.result()
+
+    for result in response.results:
+        f = open("transcription.txt", "a")
+        f.write('Transcript: {}'.format(result.alternatives[0].transcript))
+        f.close
+
+wavToSpeech("..")
+
 
 def wavToSpeech(file):    
-    import io
-    import os
-
-    # Imports the Google Cloud client library
-    from google.cloud import speech
-    from google.cloud.speech import enums
-    from google.cloud.speech import types
-
     # Instantiates a client
     client = speech.SpeechClient()
 
@@ -60,6 +79,3 @@ def wavToSpeech(file):
         f = open("transcription.txt", "w")
         f.write('Transcript: {}'.format(result.alternatives[0].transcript))
         f.close
-
-
-wavToSpeech("./audio/InventHelp’s National TV Ad Featuring George Foreman (30 sec)-L9hRsCaKC3s.wav")
