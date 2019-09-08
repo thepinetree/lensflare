@@ -31,7 +31,7 @@ const Body = ({ match }) => {
   const videoID = match.params.videoID;
   const classes = useStyles();
   const [times, setTimes] = useState({});
-  const [maxTime, setMaxTime] = useState(-1);
+  const [data, setData] = useState(() => ({}));
 
   useEffect(() => {
     const runEffect = async () => {
@@ -43,17 +43,10 @@ const Body = ({ match }) => {
     runEffect();
   }, [videoID]);
 
-  const handleTimeEvent = (time, _) => {
-    // console.log("Is this time OK", time);
-    // console.log('First Old one is', data);
-    console.log("This is maxTime", maxTime);
-    if (maxTime < time) {
-      setMaxTime(maxTime => maxTime * time);
-      // console.log('Old one is', data);
-      //const newone = {...data, [time]: desc};
-      //console.log('New one is', newone);
-      //setData(newone);
-      //console.log(newone);
+  const handleTimeEvent = (time, desc) => {
+    if (!(time in data)) {
+      const newone = {...data, [time]: desc};
+      setData(newone);
     }
   };
 
@@ -61,7 +54,7 @@ const Body = ({ match }) => {
     <div className={classes.body}>
       <Video videoID={videoID} times={times} onTimeEvent={handleTimeEvent} />
       <div className={classes.comments}>
-        {maxTime}
+        {Object.keys(data).map(key => <MyPaper key={key}>Time at {key} and Desc is {data[key]}</MyPaper>)}
       </div>
     </div>
   );
