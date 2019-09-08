@@ -29,9 +29,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const Video = ({ videoID }) => {
+const Video = ({ videoID, times, onTimeEvent }) => {
   const classes = useStyles();
   const [name, setName] = useState(null);
+  const [done, setDone] = useState([]);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -39,13 +40,18 @@ const Video = ({ videoID }) => {
   }, [videoID]);
 
   const playHandler = event => {
-    setTimeout(() => {
+    Object.keys(times).forEach(key => {
+      if (key in done) return;
+
       let interval = setInterval(() => {
-        if (event.target.getCurrentTime() >= 17000)
+        //console.log(key, " | ", event.target.getCurrentTime());
+        if (event.target.getCurrentTime() >= key) {
           clearInterval(interval);
-          console.log("Does this work at ", event.target.getCurrentTime());
-      }, 700);
-    }, 17000);
+          setDone([...done, key]);
+          onTimeEvent(key, times[key]);
+        } 
+      }, 500);
+    });
   };
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Paper } from '@material-ui/core';
 import { makeStyles, styled } from '@material-ui/styles';
 
@@ -28,16 +28,40 @@ const MyPaper = styled(Paper)({
 
 
 const Body = ({ match }) => {
+  const videoID = match.params.videoID;
   const classes = useStyles();
-  
+  const [times, setTimes] = useState({});
+  const [maxTime, setMaxTime] = useState(-1);
+
+  useEffect(() => {
+    const runEffect = async () => {
+      const response = await fetch(`http://localhost:4000/${videoID}`);
+      const times = await response.json();
+      setTimes(times);
+    };
+
+    runEffect();
+  }, [videoID]);
+
+  const handleTimeEvent = (time, _) => {
+    // console.log("Is this time OK", time);
+    // console.log('First Old one is', data);
+    console.log("This is maxTime", maxTime);
+    if (maxTime < time) {
+      setMaxTime(maxTime => maxTime * time);
+      // console.log('Old one is', data);
+      //const newone = {...data, [time]: desc};
+      //console.log('New one is', newone);
+      //setData(newone);
+      //console.log(newone);
+    }
+  };
+
   return (
     <div className={classes.body}>
-      <Video videoID={match.params.videoID} />
+      <Video videoID={videoID} times={times} onTimeEvent={handleTimeEvent} />
       <div className={classes.comments}>
-        <MyPaper>Testing A</MyPaper>            
-        <MyPaper>Testing B</MyPaper>
-        <MyPaper>Testing C</MyPaper>
-        <MyPaper>Testing D</MyPaper>
+        {maxTime}
       </div>
     </div>
   );

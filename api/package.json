@@ -5,5 +5,8 @@
   "license": "MIT",
   "dependencies": {
     "json-server": "^0.15.1"
+  },
+  "scripts": {
+    "start": "json-server --watch videos.json"
   }
 }
