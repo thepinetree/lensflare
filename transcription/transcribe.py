@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 
-def urlToWAV(url):
+def urlToWAV(video_id):
     import youtube_dl
+    url = 'https://www.youtube.com/watch?v=' + video_id
 
     ydl_opts = {
         'format': 'bestaudio/best',
@@ -9,6 +10,7 @@ def urlToWAV(url):
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'wav',
             'preferredquality': '192',
+            'outtmpl': 'audio/' + video_id,
         }],
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl: 
@@ -58,8 +60,5 @@ def wavToSpeech(file):
 
     for result in response.results:
         f = open("transcription.txt", "w")
-        f.write('Transcript: {}'.format(result.alternatives[0].transcript))
+        f.write(result.alternatives[0].transcript)
         f.close
-
-
-wavToSpeech("./audio/InventHelp’s National TV Ad Featuring George Foreman (30 sec)-L9hRsCaKC3s.wav")
