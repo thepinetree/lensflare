@@ -43,3 +43,6 @@ def classify(input_filename):
         d.line([bottom, top], fill=line_color, width=10)
         d.text((965,500), "height = 13.8333 feet", font=font, fill=(0, 0, 255))
         im.save("images/floodclassifiedimg.png")
+
+classify("flood")
+classify("power")
