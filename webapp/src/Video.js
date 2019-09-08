@@ -29,10 +29,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const sleep = ms => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
-
 const Video = ({ videoID }) => {
   const classes = useStyles();
   const [name, setName] = useState(null);
@@ -41,18 +37,6 @@ const Video = ({ videoID }) => {
   useEffect(() => {
     getYoutubeTitle(videoID, (_, title) => setName(title));
   }, [videoID]);
-
-  /*useEffect(() => {
-    const doc = ref.current.contentDocument || ref.current.contentWindow.document;
-    while (doc === null) sleep(500);
-    
-    const video = doc.getElementsByTagName('video')[0];
-    while (video === null) sleep(500);
-
-    video.addEventListener('timeupdate', event => {
-      console.log('Event Time:', event.target.getCurrentTime());
-    });
-  }, []);*/
 
   const playHandler = event => {
     setTimeout(() => {
@@ -83,6 +67,3 @@ const Video = ({ videoID }) => {
 };
 
 export default Video;
-
-//        src={`https://www.youtube.com/embed/${videoID}?autoplay=1&origin=http://172.17.107.103:3000/`}
-//frameBorder="0"

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, InputBase } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/styles';
+import { Redirect } from 'react-router-dom';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -46,7 +47,13 @@ const useStyles = makeStyles(theme => ({
 
 const Header = () => {
   const classes = useStyles();
-  
+  const [input, setInput] = useState('');
+  const [redirect, setRedirect] = useState(false);
+
+  const redirectPage = event => {
+    if(event.key === 'Enter') setRedirect(true);
+  };
+
   return (
     <AppBar position='static'>
       <Toolbar style={{justifyContent: 'space-between'}}>
@@ -62,6 +69,9 @@ const Header = () => {
           </div>
           <InputBase
             placeholder="Search YouTube by URL"
+            value={input}
+            onChange={event => setInput(event.target.value)}
+            onKeyPress={redirectPage}
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,
