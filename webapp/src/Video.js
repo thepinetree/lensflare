@@ -39,7 +39,7 @@ const Video = ({ videoID, times, onTimeEvent }) => {
     getYoutubeTitle(videoID, (_, title) => setName(title));
   }, [videoID]);
 
-  const playHandler = event => {
+  /*const playHandler = event => {
     Object.keys(times).forEach(key => {
       if (key in done) return;
 
@@ -48,11 +48,10 @@ const Video = ({ videoID, times, onTimeEvent }) => {
         if (event.target.getCurrentTime() >= key) {
           clearInterval(interval);
           setDone([...done, key]);
-          onTimeEvent(key, times[key]);
         } 
       }, 500);
     });
-  };
+  };*/
 
   return (
     <div className={classes.video}>
@@ -65,7 +64,6 @@ const Video = ({ videoID, times, onTimeEvent }) => {
             origin: 'http://172.17.107.103:3000/'
           }
         }}
-        onPlay={playHandler}
       />
       <p style={{fontWeight: 400}}>{name}</p>
     </div>
